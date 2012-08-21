@@ -15,6 +15,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Downloads and extracts the Twitter bootstrap library into a new
+directory on the filesystem and creates a basic HTML file."""
+
 import os, sys, shutil, urllib2, zipfile, argparse
 
 BOOTSTRAP_URL='http://twitter.github.com/bootstrap/assets/bootstrap.zip'
@@ -44,11 +47,11 @@ def is_internet_connected():
     except urllib2.URLError as err: pass
     return False
 
-def create_template_files (targetDir):
+def create_template_files(targetDir):
     with open(targetDir + 'index.html', 'w') as indexFile:
         indexFile.write(TEMPLATE_SRC)
 
-def download_bootstrap (targetDir):
+def download_bootstrap(targetDir):
     print('> Downloading bootstrap.zip…')
     targetFile = targetDir + 'bootstrap.zip';
     response = urllib2.urlopen(BOOTSTRAP_URL)
@@ -58,7 +61,7 @@ def download_bootstrap (targetDir):
         zipFile.extractall(targetDir)
     os.remove(targetFile)
 
-def create_project_dir (dirname):
+def create_project_dir(dirname):
     if os.path.exists(dirname):
         overwrite = ''
         while overwrite != 'y' and overwrite != 'n':
@@ -76,13 +79,13 @@ def create_project_dir (dirname):
     os.mkdir(dirname)
     print('> Created new directory "%s"' % dirname)
 
-def init_new_project (dirname):
+def init_new_project(dirname):
     create_project_dir(dirname)
     download_bootstrap(dirname)
     create_template_files(dirname)
     print('> Bootstrap complete!')
 
-def main ():
+def main():
     if not is_internet_connected():
         print('> No internet connection. Bootstrap aborted.')
         sys.exit(0)
