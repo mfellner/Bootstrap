@@ -48,6 +48,8 @@ def is_internet_connected():
     return False
 
 def create_template_files(targetDir):
+    if not targetDir.endswith(os.sep):
+      targetDir += os.sep
     with open(targetDir + 'index.html', 'w') as indexFile:
         indexFile.write(TEMPLATE_SRC)
 
